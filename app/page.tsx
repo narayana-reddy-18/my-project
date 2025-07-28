@@ -1,103 +1,211 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+} from "recharts";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [darkMode, setDarkMode] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  // Sample Data
+  const revenueData = [
+    { name: "Jan", revenue: 4000 },
+    { name: "Feb", revenue: 3000 },
+    { name: "Mar", revenue: 5000 },
+    { name: "Apr", revenue: 4500 },
+    { name: "May", revenue: 6000 },
+  ];
+
+  const usersData = [
+    { name: "USA", users: 400 },
+    { name: "India", users: 300 },
+    { name: "UK", users: 200 },
+    { name: "Canada", users: 100 },
+  ];
+
+  const pieData = [
+    { name: "Organic", value: 400 },
+    { name: "Ads", value: 300 },
+    { name: "Referral", value: 300 },
+  ];
+
+  const COLORS = ["#0088FE", "#FF8042", "#00C49F"];
+
+  const tableData = [
+    { id: 1, customer: "John Doe", amount: "$1200", status: "Completed" },
+    { id: 2, customer: "Jane Smith", amount: "$800", status: "Pending" },
+    { id: 3, customer: "Alex Johnson", amount: "$560", status: "Completed" },
+  ];
+
+  return (
+    <div
+      className={`min-h-screen ${
+        darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
+    >
+      {/* Navbar */}
+      <nav
+        className={`shadow-md px-6 py-4 flex justify-between items-center ${
+          darkMode ? "bg-gray-800" : "bg-white"
+        }`}
+      >
+        <h1 className="text-2xl font-bold">ADmyBRAND Insights</h1>
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+        >
+          {darkMode ? "Light Mode" : "Dark Mode"}
+        </button>
+      </nav>
+
+      {/* Page Content */}
+      <main className="p-6 space-y-8">
+        <h2 className="text-xl font-semibold">Overview</h2>
+
+        {/* Metric Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card darkMode={darkMode} title="Revenue" value="$45,200" change="+12%" />
+          <Card darkMode={darkMode} title="Active Users" value="8,431" change="+5%" />
+          <Card darkMode={darkMode} title="Conversions" value="1,024" change="+9%" />
+          <Card darkMode={darkMode} title="Growth" value="18%" change="Steady" />
+        </div>
+
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <ChartContainer darkMode={darkMode} title="Monthly Revenue">
+            <LineChart data={revenueData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="revenue" stroke="#8884d8" />
+            </LineChart>
+          </ChartContainer>
+
+          <ChartContainer darkMode={darkMode} title="Users by Country">
+            <BarChart data={usersData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="users" fill="#82ca9d" />
+            </BarChart>
+          </ChartContainer>
+
+          <ChartContainer darkMode={darkMode} title="Traffic Sources">
+            <PieChart>
+              <Pie
+                data={pieData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={60}
+                innerRadius={30}
+                label
+              >
+                {pieData.map((entry, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Legend />
+            </PieChart>
+          </ChartContainer>
+        </div>
+
+        {/* Table Section */}
+        <div
+          className={`p-4 rounded-xl shadow-md ${
+            darkMode ? "bg-gray-800" : "bg-white"
+          }`}
+        >
+          <h3 className="font-semibold mb-4">Recent Transactions</h3>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="text-left border-b border-gray-300">
+                <th className="p-2">Customer</th>
+                <th className="p-2">Amount</th>
+                <th className="p-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((row) => (
+                <tr
+                  key={row.id}
+                  className={`border-b border-gray-200 hover:${
+                    darkMode ? "bg-gray-700" : "bg-gray-100"
+                  }`}
+                >
+                  <td className="p-2">{row.customer}</td>
+                  <td className="p-2">{row.amount}</td>
+                  <td className="p-2">{row.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    </div>
+  );
+}
+
+// Reusable Card Component
+function Card({
+  darkMode,
+  title,
+  value,
+  change,
+}: {
+  darkMode: boolean;
+  title: string;
+  value: string;
+  change: string;
+}) {
+  return (
+    <div
+      className={`rounded-xl shadow-md p-4 hover:shadow-lg transition ${
+        darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+      }`}
+    >
+      <h3 className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}>{title}</h3>
+      <p className="text-2xl font-bold">{value}</p>
+      <p className="text-green-500 text-sm">{change}</p>
+    </div>
+  );
+}
+
+// Chart Container Wrapper
+function ChartContainer({
+  darkMode,
+  title,
+  children,
+}: {
+  darkMode: boolean;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className={`p-4 rounded-xl shadow-md ${
+        darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+      }`}
+    >
+      <h3 className="font-semibold mb-2">{title}</h3>
+      <ResponsiveContainer width="100%" height={200}>
+        {children}
+      </ResponsiveContainer>
     </div>
   );
 }
