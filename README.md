@@ -26,7 +26,8 @@ It showcases **interactive charts, a light/dark mode toggle, and a responsive la
 
 ## 📸 Screenshot  
 *(Replace with your own if you like)*  
-![Dashboard Screenshot](./screenshot.png)
+[![Dashboard Screenshot](./screenshot.png)](https://my-project-8gk9.vercel.app)
+
 ---
 
 ## 🚀 Getting Started
