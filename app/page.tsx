@@ -186,7 +186,7 @@ function Card({
   );
 }
 
-// Chart Container Wrapper
+// Chart Container Wrapper (FIXED)
 function ChartContainer({
   darkMode,
   title,
@@ -194,7 +194,7 @@ function ChartContainer({
 }: {
   darkMode: boolean;
   title: string;
-  children: React.ReactNode;
+  children: React.ReactElement; // <-- Fixed type for Vercel
 }) {
   return (
     <div
@@ -203,7 +203,7 @@ function ChartContainer({
       }`}
     >
       <h3 className="font-semibold mb-2">{title}</h3>
-      <ResponsiveContainer width="100%" height={200}>
+      <ResponsiveContainer width="100%" height={400}>
         {children}
       </ResponsiveContainer>
     </div>
