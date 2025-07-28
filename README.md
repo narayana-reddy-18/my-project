@@ -26,8 +26,7 @@ It showcases **interactive charts, a light/dark mode toggle, and a responsive la
 
 ## 📸 Screenshot  
 *(Replace with your own if you like)*  
-![Dashboard Screenshot](https://via.placeholder.com/1200x600.png?text=Dashboard+Preview)
-
+![Dashboard Screenshot](./screenshot.png)
 ---
 
 ## 🚀 Getting Started
