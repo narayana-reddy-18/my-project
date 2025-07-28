@@ -32,15 +32,16 @@ This project was built as a **portfolio-ready sample** to showcase:
 
 ---
 
-## Running Locally
+## AI Usage Report
+This project was built with assistance from **ChatGPT** for:
+- Generating initial React + Recharts component structure
+- Debugging type issues for Next.js deployment
+- Writing a professional README format
 
-To set up the project on your computer:
-```bash
-# 1. Navigate to the folder
-cd C:\Users\reddy\Desktop\admybrand-dashboard
+All code was **reviewed, tested, and customized manually** before deployment.
 
-# 2. Install dependencies
-npm install
+---
 
-# 3. Start the development server
-npm run dev
+## Live Deployment
+This project is deployed using **Vercel** for easy sharing.  
+[Click here for the live demo](https://my-project-8gk9.vercel.app)
